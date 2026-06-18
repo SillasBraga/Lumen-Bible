@@ -22,36 +22,36 @@ export type OfficialBibleChapterRef = {
   reference: string;
 };
 
-const proxyUrl = import.meta.env.VITE_OFFICIAL_BIBLE_PROXY_URL;
+const proxyUrl = import.meta.env.VITE_OFFICIAL_BIBLE_PROXY_URL?.trim();
+
+function getBaseUrl() {
+  return proxyUrl || '/api/bible';
+}
 
 export function hasOfficialBibleProxy() {
-  return Boolean(proxyUrl);
+  return true;
+}
+
+function buildUrl(pathname: string) {
+  return new URL(`${getBaseUrl().replace(/\/$/, '')}${pathname}`, window.location.origin);
 }
 
 export async function fetchOfficialBibleChapter(bibleId: string, chapterId: string) {
-  if (!proxyUrl) {
-    throw new Error('VITE_OFFICIAL_BIBLE_PROXY_URL não configurada.');
-  }
-
-  const url = new URL('/chapter', proxyUrl);
+  const url = buildUrl('/chapter');
   url.searchParams.set('bibleId', bibleId);
   url.searchParams.set('chapterId', chapterId);
 
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Falha ao carregar capítulo oficial: ${response.status}`);
+    throw new Error(`Falha ao carregar capitulo oficial: ${response.status}`);
   }
 
   return (await response.json()) as OfficialBibleChapter;
 }
 
 export async function fetchOfficialBibleBooks(bibleId: string) {
-  if (!proxyUrl) {
-    throw new Error('VITE_OFFICIAL_BIBLE_PROXY_URL nao configurada.');
-  }
-
-  const url = new URL('/books', proxyUrl);
+  const url = buildUrl('/books');
   url.searchParams.set('bibleId', bibleId);
 
   const response = await fetch(url);
@@ -64,11 +64,7 @@ export async function fetchOfficialBibleBooks(bibleId: string) {
 }
 
 export async function fetchOfficialBibleChapters(bibleId: string, bookId: string) {
-  if (!proxyUrl) {
-    throw new Error('VITE_OFFICIAL_BIBLE_PROXY_URL nao configurada.');
-  }
-
-  const url = new URL('/chapters', proxyUrl);
+  const url = buildUrl('/chapters');
   url.searchParams.set('bibleId', bibleId);
   url.searchParams.set('bookId', bookId);
 

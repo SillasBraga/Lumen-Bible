@@ -193,6 +193,12 @@ npm run build
 npm run preview
 ```
 
+### Deploy na Vercel
+
+```bash
+npm run deploy:vercel
+```
+
 ## Como usar
 
 Depois de abrir o app:
@@ -247,6 +253,48 @@ O `.gitignore` deste projeto ja ignora:
 - `.env`
 - `node_modules`
 - `dist`
+
+## Deploy na Vercel
+
+O projeto esta preparado para deploy na `Vercel` com:
+
+- frontend `Vite`
+- funcoes serverless em `api/bible/*`
+- variavel segura `API_BIBLE_KEY` no ambiente da Vercel
+
+### Variaveis de ambiente na Vercel
+
+Configure pelo menos:
+
+```env
+API_BIBLE_KEY=sua_chave
+```
+
+Opcionalmente, para desenvolvimento local com proxy separado:
+
+```env
+VITE_OFFICIAL_BIBLE_PROXY_URL=http://localhost:8787
+```
+
+Em producao na Vercel, o frontend usa automaticamente as rotas:
+
+- `/api/bible/books`
+- `/api/bible/chapters`
+- `/api/bible/chapter`
+
+### Fluxo recomendado com o Vercel CLI
+
+```bash
+vercel pull
+vercel env add API_BIBLE_KEY
+vercel --prod
+```
+
+Se voce preferir, tambem pode usar:
+
+```bash
+npm run deploy:vercel
+```
 
 ## Troubleshooting
 
