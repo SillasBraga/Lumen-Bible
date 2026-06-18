@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --canvas: 247 243 234;
+  --panel: 255 251 245;
+  --soft: 243 236 224;
+  --text: 42 36 30;
+  --muted: 110 98 85;
+  --line: 206 193 174;
+  --accent: 193 119 55;
+  --accent2: 61 110 122;
+}
+
+.dark {
+  color-scheme: dark;
+  --canvas: 10 14 23;
+  --panel: 16 22 34;
+  --soft: 24 32 48;
+  --text: 236 231 223;
+  --muted: 162 170 182;
+  --line: 57 70 94;
+  --accent: 240 171 95;
+  --accent2: 103 232 249;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-text font-ui antialiased;
+  background-image: var(--page-bg);
+  min-height: 100vh;
+}
+
+:root {
+  --page-bg: radial-gradient(circle at top, rgba(255, 255, 255, 0.3), transparent 30%),
+    linear-gradient(180deg, rgba(247, 243, 234, 1), rgba(241, 235, 223, 1));
+}
+
+.dark body {
+  --page-bg: radial-gradient(circle at top, rgba(30, 41, 59, 0.9), transparent 34%),
+    linear-gradient(180deg, rgba(8, 12, 18, 1), rgba(9, 14, 24, 1));
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(193, 119, 55, 0.24);
+}
+
+.glass {
+  @apply border border-line/60 bg-panel/80 backdrop-blur-xl;
+}
+
+.soft-panel {
+  @apply border border-line/50 bg-panel/70 backdrop-blur-md;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.reader-surface {
+  @apply border border-line/50 bg-panel/75 backdrop-blur-md;
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.14);
+}
+
+.field {
+  @apply w-full rounded-2xl border border-line/70 bg-panel/70 px-4 py-3 text-sm text-text outline-none transition placeholder:text-muted focus:border-accent;
+}
+
+.reader-copy {
+  text-wrap: pretty;
+}
+
+.verse-inline {
+  display: inline;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 0.08rem 0.18rem;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.verse-inline:hover {
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.verse-inline.is-selected {
+  background: rgba(193, 119, 55, 0.16);
+  box-shadow: 0 0 0 1px rgba(193, 119, 55, 0.24);
+}
+
+.verse-inline.is-highlighted {
+  background: rgba(103, 232, 249, 0.12);
+}
+
+.verse-inline.is-favorited .verse-number {
+  color: rgb(var(--accent));
+}
+
+.verse-number {
+  margin-right: 0.35rem;
+  font-size: 0.62em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgb(var(--muted));
+}
+
+.verse-flow {
+  text-wrap: pretty;
+}
+
+.reader-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.reader-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.38);
+  border-radius: 999px;
+}
